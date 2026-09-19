@@ -14,7 +14,6 @@ import { PaginationService } from '@shared/components/pagination/pagination.serv
 export class HomePage {
 
   productsService = inject(ProductsService);
-
   paginationService = inject(PaginationService);
 
   productsResource = rxResource({
