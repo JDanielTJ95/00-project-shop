@@ -10,33 +10,50 @@
       placeholder="Título"
       class="input input-bordered w-full"
       formControlName="title"
+      [class.border-red-500]="productForm.get('title')?.errors ?? false"
     />
+    <form-error-label [control]="productForm.get('title')!" />
 
-    <input type="text" placeholder="Slug" class="input input-bordered w-full" formControlName="slug" />
+    <input type="text"
+           placeholder="Slug"
+           class="input input-bordered w-full"
+           formControlName="slug"
+           [class.border-red-500]="productForm.get('slug')?.errors ?? false"
+    />
+    <form-error-label [control]="productForm.get('slug')!" />
 
     <textarea
       class="textarea textarea-bordered"
       placeholder="Descripción"
       rows="6"
       formControlName="description"
+      [class.border-red-500]="productForm.get('description')?.errors ?? false"
     ></textarea>
+    <form-error-label [control]="productForm.get('description')!" />
 
     <h2 class="text-lg font-bold">Datos de venta</h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-      <input
-        type="number"
-        placeholder="Precio"
-        class="input input-bordered w-full"
-        formControlName="price"
-      />
+      <div>
+
+        <input
+          type="number"
+          placeholder="Precio"
+          class="input input-bordered w-full"
+          formControlName="price"
+          [class.border-red-500]="productForm.get('price')?.errors ?? false"
+        />
+        <form-error-label [control]="productForm.get('price')!" />
+      </div>
 
       <input
         type="number"
         placeholder="Inventario"
         class="input input-bordered w-full"
         formControlName="stock"
-      />
+        [class.border-red-500]="productForm.get('stock')?.errors ?? false"
+    />
+    <form-error-label [control]="productForm.get('stock')!" />
     </div>
 
     <!-- tags -->
@@ -45,22 +62,32 @@
       placeholder="Tags"
       class="input input-bordered w-full"
       formControlName="tags"
+      [class.border-red-500]="productForm.get('tags')?.errors ?? false"
     />
+    <form-error-label [control]="productForm.get('tags')!" />
+
+    <!-- specs -->
+    <input
+      type="text"
+      placeholder="Specs"
+      class="input input-bordered w-full"
+      formControlName="specs"
+      [class.border-red-500]="productForm.get('specs')?.errors ?? false"
+    />
+    <form-error-label [control]="productForm.get('specs')!" />
 
     <!-- Botones para el género -->
     <div class="grid grid-cols-3 gap-2">
       <!-- <button class="btn btn-sm btn-outline">Masculino</button> -->
-      <button type="button" class="btn btn-sm btn-neutral">Perfiles</button>
-      <button type="button" class="btn btn-sm btn-primary">Tubulares</button>
-      <button type="button" class="btn btn-sm btn-secondary">Laminas</button>
-      <button type="button" class="btn btn-sm btn-accent">Consumibles</button>
-      <button type="button" class="btn btn-sm btn-info">Herrajes</button>
-      <button type="button" class="btn btn-sm btn-success">Cerrajeria</button>
-      <button type="button" class="btn btn-sm btn-warning">Herramientas</button>
-      <button type="button" class="btn btn-sm btn-error">Pedidos</button>
+      <button type="button" class="btn btn-sm" (click)="productForm.patchValue({category: 'perfiles'})" [class.btn-neutral]="productForm.value.category === 'perfiles'">Perfiles</button>
+      <button type="button" class="btn btn-sm" (click)="productForm.patchValue({category: 'tubulares'})" [class.btn-primary]="productForm.value.category === 'tubulares'">Tubulares</button>
+      <button type="button" class="btn btn-sm" (click)="productForm.patchValue({category: 'laminas'})" [class.btn-secondary]="productForm.value.category === 'laminas'">Laminas</button>
+      <button type="button" class="btn btn-sm" (click)="productForm.patchValue({category: 'consumibles'})" [class.btn-accent]="productForm.value.category === 'consumibles'">Consumibles</button>
+      <button type="button" class="btn btn-sm" (click)="productForm.patchValue({category: 'herrajes'})" [class.btn-info]="productForm.value.category === 'herrajes'">Herrajes</button>
+      <button type="button" class="btn btn-sm" (click)="productForm.patchValue({category: 'cerrajeria'})" [class.btn-success]="productForm.value.category === 'cerrajeria'">Cerrajeria</button>
+      <button type="button" class="btn btn-sm" (click)="productForm.patchValue({category: 'herramientas'})" [class.btn-warning]="productForm.value.category === 'herramientas'">Herramientas</button>
+      <button type="button" class="btn btn-sm" (click)="productForm.patchValue({category: 'pedidos'})" [class.btn-error]="productForm.value.category === 'pedidos'">Pedidos</button>
     </div>
-
-    <!-- 'perfiles'|'tubulares'|'laminas'|'consumibles'|'herrajes'|'cerrajeria'|'herramientas'|'pedidos' -->
 
     <!-- <select class="select select-bordered w-full">
       <option value="male">Masculino</option>
@@ -68,20 +95,19 @@
       <option value="unisex">Unisex</option>
     </select> -->
 
-    <!-- Sizes -->
+    <!-- Types -->
     <div class="grid grid-cols-6 gap-2">
       @for (type of types; track type) {
-      <button class="btn btn-sm btn-outline" type="button">{{ type }}</button>
+      <button class="btn btn-sm btn-outline" type="button" (click)="onSizeClicked(type)" [class.btn-info]="productForm.value.types?.includes(type)">{{ type }}</button>
       }
     </div>
+
   </div>
 
   <!-- Imágenes -->
   <div class="flex flex-col gap-2">
     <div class="flex justify-end h-12">
       <button class="btn btn-secondary" type="submit">
-        <!-- <span class="loading loading-spinner loading-sm"></span> -->
-
         Guardar
       </button>
     </div>
